@@ -14,3 +14,7 @@ export const courses = (categotyId,limit,page) => http.get('/mic/course/courses'
 
 //搜索
 export const search = (str) => http.get('/mic/selectAll',{str});
+
+//获取用户信息
+export const userInfo = () => http.get('/mic//member/userInfo',{});
+

@@ -21,6 +21,7 @@ import Withdraw from "../pages/Withdraw";
 import Vcode from "../pages/Vcode";
 import ExpertInfo from "../pages/ExpertInfo";
 import PayFinish from "../pages/PayFinish";
+import Register from "../pages/Register";
 
 Vue.use(Router);
 
@@ -200,6 +201,14 @@ export default new Router({
       component: PayFinish,
       meta:{
         title: '购买完成'
+      }
+    },
+    {
+      path: '/Register',
+      name: 'Register',
+      component: Register,
+      meta:{
+        title: '登录注册'
       }
     }
   ]

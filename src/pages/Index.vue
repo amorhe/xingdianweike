@@ -1,48 +1,49 @@
 <template>
-  <div class="content_body">
-    <div class="search_module">
-      <router-link to="/Search" class="serachView">
-        <img src="../assets/search_icon.png" alt="图标">
-<!--        <input disabled type="text" placeholder="搜索相关课程" v-model="value">-->
-        <span>搜索相关课程</span>
-      </router-link>
-      <a href="tel:13587546889">
-        <img class="telphone" src="../assets/listen.png" alt="图标">
-      </a>
-    </div>
-    <div class="search_empty"></div>
-    <!--    列表-->
-    <div class="list_content">
-      <Scroll height="100%" :on-reach-bottom="handleReachBottom">
-        <div class="list_all" v-for="(item,index) in courseList" :key="index" @click="goDetail(item.type,item.id)">
-          <div class="list_wrap">
-            <img class="list_img" :src="item.picture" alt="图片">
-            <div class="list_bottom">
-              <div>
-                <img v-if="item.type == 0" src="../assets/listen_small.png" alt="图标">
-                <img v-if="item.type == 1" src="../assets/play_icon.png" alt="图标">
-                <span>共{{item.count}}节课</span>
-              </div>
-              <div>
-                <span>销量</span>
-                <span>{{item.sales}}</span>
+  <div>
+    <div class="content_body">
+      <!--    <div class="search_module">-->
+      <!--      <router-link to="/Search" class="serachView">-->
+      <!--        <img src="../assets/search_icon.png" alt="图标">-->
+      <!--        <span>搜索相关课程</span>-->
+      <!--      </router-link>-->
+      <!--      <a href="tel:13587546889">-->
+      <!--        <img class="telphone" src="../assets/listen.png" alt="图标">-->
+      <!--      </a>-->
+      <!--    </div>-->
+      <!--    <div class="search_empty"></div>-->
+      <!--    列表-->
+      <div class="list_content">
+        <Scroll :height="h" :on-reach-bottom="handleReachBottom">
+          <div class="list_all" v-for="(item,index) in courseList" :key="index" @click="goDetail(item.type,item.id)">
+            <div class="list_wrap">
+              <img class="list_img" :src="item.picture" alt="图片">
+              <div class="list_bottom">
+                <div>
+                  <img v-if="item.type == 0" src="../assets/listen_small.png" alt="图标">
+                  <img v-if="item.type == 1" src="../assets/play_icon.png" alt="图标">
+                  <span>共{{item.count}}节课</span>
+                </div>
+                <div>
+                  <span>销量</span>
+                  <span>{{item.sales}}</span>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="list_tag">
-            <span v-for="(i,v) in item.labels" :key="i">{{i}}</span>
-          </div>
-          <div class="list_info">
-            <div class="list_title">{{item.title}}</div>
-            <div class="list_price_info">
-              <span class="price_old">¥{{item.purchasePrice/100}}</span>
-              <span class="font_bold">¥</span>
-              <span class="font_bold price_new">{{item.sellPrice/100}}</span>
+            <div class="list_tag">
+              <span v-for="(i,v) in item.labels" :key="i">{{i}}</span>
             </div>
+            <div class="list_info">
+              <div class="list_title">{{item.title}}</div>
+              <div class="list_price_info">
+                <span class="price_old">¥{{item.purchasePrice/100}}</span>
+                <span class="font_bold">¥</span>
+                <span class="font_bold price_new">{{item.sellPrice/100}}</span>
+              </div>
+            </div>
+            <div class="list_txt">{{item.name}}</div>
           </div>
-          <div class="list_txt">{{item.name}}</div>
-        </div>
-      </Scroll>
+        </Scroll>
+      </div>
     </div>
     <div class="tab_empty"></div>
   </div>
@@ -58,33 +59,28 @@
         value: '',
         courseList:[],
         limit:20,
-        page: 1
+        page: 1,
+        h:0
       }
     },
     created() {
       this.getCourseList(this.limit,this.page)
     },
-    mounted() {
-      window.addEventListener('scroll',this.handleScroll)
-    },
     methods:{
       getCourseList(limit,page){
         getList(limit,page).then((res) => {
           this.courseList = [...this.courseList,...res.data.data.list];
+          this.h = 260 * res.data.data.list.length;
         })
       },
       handleReachBottom() {
-        // return new Promise(resolve => {
-        //   setTimeout(() => {
-        //     this.page ++;
-        //     this.getCourseList(this.limit,this.page);
-        //     resolve();
-        //   }, 2000);
-        // });
-      },
-      handleScroll(){
-        let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-        // console.log(scrollTop)
+        return new Promise(resolve => {
+        setTimeout(() => {
+          this.page ++;
+          this.getCourseList(this.limit,this.page);
+          resolve();
+        }, 2000);
+        });
       },
       goDetail(e,id){
         if(e == 0){
@@ -96,10 +92,8 @@
     }
   }
 </script>
-
 <style scoped lang="less">
   .content_body {
-    padding: 0 30px;
 
     .search_module {
       width: 100%;
@@ -145,10 +139,13 @@
     }
 
     .list_content {
+      padding: 30px 0 0;
+      height: 100%;
+      box-sizing: border-box;
 
       .list_all {
-        width: 100%;
         margin-bottom: 44px;
+        padding: 0 30px;
 
         .list_wrap {
           width: 100%;

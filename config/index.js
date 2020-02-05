@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/mic': {
-        target: 'http://192.168.0.116:8081', // 跨域地址
+        target: 'http://smtsv4.natappfree.cc', // 跨域地址
         changeOrigin: true, //是否跨域
         secure: false, //是否使用https
         pathRewrith:{

@@ -7,7 +7,7 @@
       <div class="video_title">{{courseObj.name}}</div>
       <div class="video_intro">
         <span v-for="(item,index) in courseObj.labels" :key="index">{{item}} · </span>{{courseObj.sales}}人在学习 · 共{{courseObj.count}}节课</div>
-      <div :class="status==0?'video_text':'text_ellipsis video_text'">{{courseObj.content}}</div>
+      <div :class="status==0?'video_text':'text_ellipsis video_text'">{{courseObj.synopsis}}</div>
       <div :hidden="status==0" class="cource_intro" @click="seeone">课程详情介绍</div>
     </div>
     <!--      课程内容-->
@@ -32,14 +32,7 @@
     <!--      课程详情-->
     <div class="video_detail">
       <div class="iit font_bold">课程详情</div>
-      <div class="video_detail_intro">本书主要介绍Tableau Desktop的应用，全书内容共有5章。
-        第1章介绍了Tableau平台的价值与功能和它所能完成的企业数据重任；
-        第2章是介绍了一些复杂图形，配合详细的数据结构和实现步骤，帮助用户扩展日常分析时所使用的图表池；
-        第3章是对Tableau Desktop功能点的深入应用集合，配合具体实例和应用场景讲解；
-        第4章主要针对数据可视化的设计和实现进行了详细的介绍， 附带案例展示；
-        第5章帮助用户发散思维，解锁Tableau Desktop的多种用途。
-        本书旨在帮助读者更加深入地了解Tableau在可视化探索分析以及设计布局方面的应用，适合那些已经使用过Tableau平台一两年的用户，如相关的企业用户、数据分析师和数据爱好者。
-        此外，考虑到还有很多刚开始接触Tableau的读者，本书的所有内容都尽可能通俗易懂，确保新手也能够理解Tableau的相应功能点，并能掌握每个复杂应用的具体实现方式。</div>
+      <div class="video_detail_intro">{{courseObj.content}}</div>
     </div>
     <div class="buy_empty"></div>
     <!--      分享-->
